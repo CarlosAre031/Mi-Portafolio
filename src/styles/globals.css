@@ -1,21 +1,194 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+/* Variables del tema */
 :root {
-  --background: #ffffff;
+  /* Variables para el modo claro */
+  --primary: #066a39;
+  --complementary: #825b27;
+  --secondary: #ab364a;
+  --background: #f5eee4;
+  --background-secondary: #f5eee4;
   --foreground: #171717;
+  --trans-dur: 0.4s;
+  --trans-timing: cubic-bezier(0.65, 0, 0.35, 1);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* Variables para el modo oscuro */
+:root.dark {
+  --primary: #ab364a;
+  --complementary: rgb(250 204 21);
+  --secondary: #066a39;
+  --background: #2e2f2e;
+  --background-secondary: #2e2f2e;
+  --foreground: #ededed;
+}
+
+/* Transiciones suaves para los cambios de tema */
+* {
+  transition: background-color var(--trans-dur) var(--trans-timing),
+              color var(--trans-dur) var(--trans-timing),
+              border-color var(--trans-dur) var(--trans-timing),
+              box-shadow var(--trans-dur) var(--trans-timing);
+}
+
+@layer components {
+  .nav-link {
+    @apply relative font-semibold text-foreground cursor-pointer text-[17px] w-fit md:block 
+    after:block after:content-[''] after:absolute after:h-[3px] after:bg-primary 
+    after:w-full after:scale-x-0 hover:after:scale-x-100 after:transition 
+    after:duration-300 after:origin-center hidden hover:text-complementary;
+  }
+
+  .nav-link-mobile {
+    @apply relative mb-8 font-semibold text-foreground cursor-pointer text-[27px] w-fit md:block 
+    after:block after:content-[''] after:absolute after:h-[3px] after:bg-primary 
+    after:w-full after:scale-x-0 hover:after:scale-x-100 after:transition 
+    after:duration-300 after:origin-center hover:text-complementary;
+  }
+
+  .heading {
+    @apply text-center text-foreground text-[28px] sm:text-[33px] md:text-[45px] font-bold uppercase;
   }
 }
 
+/* Aplicación de variables al cuerpo del documento */
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Montserrat', sans-serif;
+}
+
+/* Clases de utilidad para los colores */
+.text-primary {
+  color: var(--primary);
+}
+
+.text-complementary {
+  color: var(--complementary);
+}
+
+.text-secondary {
+  color: var(--secondary);
+}
+
+.text-base {
+  color: var(--foreground);
+}
+
+.bg-primary {
+  background-color: var(--primary);
+}
+
+.bg-complementary {
+  background-color: var(--complementary);
+}
+
+.bg-secondary {
+  background-color: var(--secondary);
+}
+
+.bg-base {
+  background-color: var(--background);
+}
+
+.bg-background {
+  background-color: var(--background);
+}
+
+.bg-background-secondary {
+  background-color: var(--background-secondary);
+}
+
+/* Utilidades para opacidad de texto */
+.text-foreground {
+  color: var(--foreground);
+}
+
+.text-foreground\/90 {
+  color: color-mix(in srgb, var(--foreground) 90%, transparent);
+}
+
+.text-foreground\/75 {
+  color: color-mix(in srgb, var(--foreground) 75%, transparent);
+}
+
+.text-foreground\/60 {
+  color: color-mix(in srgb, var(--foreground) 60%, transparent);
+}
+
+/* Utilidades para opacidad de fondo */
+.bg-foreground {
+  background-color: var(--foreground);
+}
+
+.bg-foreground\/90 {
+  background-color: color-mix(in srgb, var(--foreground) 90%, transparent);
+}
+
+.bg-foreground\/75 {
+  background-color: color-mix(in srgb, var(--foreground) 75%, transparent);
+}
+
+.bg-foreground\/60 {
+  background-color: color-mix(in srgb, var(--foreground) 60%, transparent);
+}
+
+/* Estilos para scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--background);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--primary);
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--complementary);
+}
+
+/* Estilos para selección de texto */
+::selection {
+  background: var(--primary);
+  color: var(--background);
+}
+
+/* Animaciones */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn var(--trans-dur) var(--trans-timing);
+}
+
+/* Utilidades de modo oscuro específicas */
+.dark .invert-on-dark {
+  filter: invert(1);
+}
+
+.dark .brightness-90 {
+  filter: brightness(0.9);
+}
+
+/* Media queries para preferencias de movimiento reducido */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

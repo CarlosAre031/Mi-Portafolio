@@ -1,19 +1,28 @@
-import type { Config } from "tailwindcss";
-
-const config: Config = {
+/** @type {import('tailwindcss').Config} */
+module.exports = {
   content: [
-    "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
+    "./app/**/*.{js,ts,jsx,tsx,mdx}",
+    "./pages/**/*.{js,ts,jsx,tsx,mdx}",
+    "./components/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
     extend: {
       colors: {
-        background: "var(--background)",
-        foreground: "var(--foreground)",
+        primary: 'var(--primary)',
+        complementary: 'var(--complementary)',
+        secondary: 'var(--secondary)',
+        background: 'var(--background)',
+        'background-secondary': 'var(--background-secondary)',
+        foreground: 'var(--foreground)',
+      },
+      fontFamily: {
+        primary: ["Montserrat"],
+        secondary: ["Geist"],
+        mono: ["Geist Mono"],
       },
     },
   },
   plugins: [],
-};
-export default config;
+  darkMode: 'class', // Esto habilita el modo oscuro basado en las preferencias del sistema
+}
