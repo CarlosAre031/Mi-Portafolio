@@ -7,7 +7,7 @@ import Services from '@/components/Services';
 import Skills from '@/components/Skils';
 import Projects from '@/components/Projects';
 {/*import Testimonial from '@/components/Testimonial';*/}
-import Blog from '@/components/Blog';
+{/*import Blog from '@/components/Blog';*/}
 import Footer from '@/components/Footer';
 import AOS from 'aos';
 import 'aos/dist/aos.css'; 
@@ -47,25 +47,38 @@ const HomePage = () => {
     });
   },[])
 
-  return ( 
-  <div className="overflow-x-hidden">
-    <div>
-      <ThemeToggle/>
-      <MobileNav nav={nav} closeNav={closeNav}/>
-      <Nav openNav={openNav} />
-      <Hero />
-      <div className='relative z-[30]'>
-        <About />
-        <Services />
-        <Skills />
-        <Projects />
-        <Blog />
-        {/*<Testimonial />*/}
-        <Footer />
-      </div>
+  return (
+    <div className="overflow-x-hidden">
+        <div>
+            <ThemeToggle/>
+            <MobileNav nav={nav} closeNav={closeNav}/>
+            <Nav openNav={openNav} />
+            <div id="hero">
+                <Hero />
+            </div>
+            <div className='relative z-[30]'>
+                <div id="about">
+                    <About />
+                </div>
+                <div id="services">
+                    <Services />
+                </div>
+                <div id="skills">
+                    <Skills />
+                </div>
+               {/* <div id="blog">
+                    <Blog />
+                </div>*/}
+                <div id="projects">
+                    <Projects />
+                </div>
+                <div id="footer">
+                    <Footer />
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
-  );
+);
 };
 
-export default HomePage
+export default HomePage;

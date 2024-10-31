@@ -25,7 +25,7 @@ const About = () => {
             </p>
           </div>
           <button className="px-[2rem] hover:bg-complementary transition-all duration-300 py-[1rem] text-[18px] font-bold uppercase bg-primary text-white flex items-center space-x-2 rounded-md">
-            <p>Descargar CV</p>
+            <p>HOJA DE VIDA</p>
             <ArrowDownTrayIcon className="w-[1.6rem] h-[1.7rem] text-white" />
           </button>
         </div>
