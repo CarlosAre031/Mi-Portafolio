@@ -337,9 +337,9 @@ const Projects: React.FC = () => {
 
   return (
     <div className="bg-background pt-[4rem] md:pt-[8rem] pb-[4rem]">
-      <h1 className="heading mb-12 text-3xl sm:text-4xl lg:text-5xl">
-        MIS<span className="text-primary">PROYECTOS</span>
-      </h1>
+      <h2 className="heading mb-12">
+        Mis <span className="text-primary">Proyectos</span>
+      </h2>
 
       <div className="relative w-[95%] lg:w-[90%] mx-auto overflow-hidden">
         <motion.div

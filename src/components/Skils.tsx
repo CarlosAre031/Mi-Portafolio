@@ -216,9 +216,12 @@ const Skills = () => {
     <div className="py-16 bg-background transition-colors duration-300">
       {/* Sección de Educación Formal */}
       <div className="container mx-auto px-4 mb-16">
-        <h2 className="text-4xl font-bold text-center text-foreground mb-12">
-          Formación <span className="text-primary">Profesional</span>
-        </h2>
+      <h2 className="heading mb-12">
+        Mis <span className="text-primary">Habilidades</span>
+      </h2>
+        <h3 className="text-4xl font-bold text-center text-foreground mb-12">
+          Formación Profesional
+        </h3>
         
         <div className="max-w-4xl mx-auto space-y-8">
           {sortedData.education.map((item, index) => (
@@ -229,9 +232,9 @@ const Skills = () => {
 
       {/* Sección de Habilidades Técnicas */}
       <div className="container mx-auto px-4 mb-16 bg-background-secondary py-12 rounded-xl">
-        <h2 className="text-3xl font-bold text-center text-foreground mb-12">
-          Habilidades <span className="text-primary">Técnicas</span>
-        </h2>
+        <h3 className="text-3xl font-bold text-center text-foreground mb-12">
+          Habilidades Técnicas
+        </h3>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
           {/* Lenguajes de Programación */}
@@ -286,9 +289,9 @@ const Skills = () => {
 
       {/* Sección de Cursos y Certificaciones */}
       <div className="container mx-auto px-4">
-        <h2 className="text-4xl font-bold text-center text-foreground mb-12">
-          Cursos y <span className="text-primary">Certificaciones</span>
-        </h2>
+        <h3 className="text-4xl font-bold text-center text-foreground mb-12">
+          Cursos y Certificaciones
+        </h3>
 
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-7xl mx-auto">

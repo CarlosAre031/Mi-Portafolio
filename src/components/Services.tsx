@@ -63,9 +63,9 @@ const Services = () => {
 
   return (
     <div className="bg-background pt-[4rem] md:pt-[8rem] pb-[5rem] transition-colors duration-300">
-      <p className="heading">
+      <h2 className="heading">
         Mis <span className="text-primary">Servicios</span>
-      </p>
+      </h2>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 w-[80%] mx-auto items-stretch gap-8 mt-[4rem]">
         {services.map((service, index) => (
           <div

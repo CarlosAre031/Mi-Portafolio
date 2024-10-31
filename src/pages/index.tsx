@@ -12,6 +12,7 @@ import Footer from '@/components/Footer';
 import AOS from 'aos';
 import 'aos/dist/aos.css'; 
 import ThemeToggle from '@/components/ThemeToggle';
+import LoadingScreen from '@/components/LoadingScreen';
 
 const HomePage = () => {
 
@@ -49,6 +50,7 @@ const HomePage = () => {
 
   return (
     <div className="overflow-x-hidden">
+        <LoadingScreen />
         <div>
             <ThemeToggle/>
             <MobileNav nav={nav} closeNav={closeNav}/>
