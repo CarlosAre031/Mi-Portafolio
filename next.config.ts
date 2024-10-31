@@ -1,9 +1,11 @@
-import type { NextConfig } from "next";
-
-const nextConfig: NextConfig = {
-  /* config options here */
+const nextConfig = {
   reactStrictMode: true,
-  output: 'standalone' 
+  output: 'standalone',
+  trailingSlash: true,
+  images: {
+    domains: ['localhost'], // Añade aquí cualquier dominio de imágenes externo que uses
+    unoptimized: true
+  }
 };
 
 export default nextConfig;
