@@ -4,39 +4,73 @@ import React from "react";
 
 const About = () => {
   return (
-    <div className="bg-[#121121] pb-[3rem] pt-[4rem] md:pt-[8rem]">
+    <div className="bg-background pb-[3rem] pt-[4rem] md:pt-[8rem] transition-colors duration-300">
       <div className="grid grid-cols-1 md:grid-cols-2 w-[80%] mx-auto gap-[3rem] items-center">
         <div>
-          <h1 className="text-[20px] font-bold uppercase text-[#55e6a5] mb-[1rem]">
-            ABOUT ME
+          <h1 className="text-[20px] font-bold uppercase text-primary mb-[1rem]">
+            SOBRE MÍ
           </h1>
-          <h2 className="text-[25px] md:text-[35px] lg:text-[45px] md:leading-[3rem] leading-[2rem] capitalize mb-[3rem] font-bold text-white">
-            Transforming <span className="text-yellow-400">Visions</span>
+          <h2 className="text-[25px] md:text-[35px] lg:text-[45px] md:leading-[3rem] leading-[2rem] capitalize mb-[3rem] font-bold text-foreground">
+            Desarrollo y <span className="text-complementary">Seguridad</span>
           </h2>
           <div className="mb-[3rem] flex items-center md:space-x-10">
-            <span className="w-[100px] hidden md:block h-[5px] bg-slate-400 rounded-sm"></span>
-            <p className="text-[19px] text-slate-300 w-[80%] ">
-              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Culpa,
-              cupiditate itaque provident dolore inventore suscipit optio vel
-              doloribus consequuntur nesciunt rem earum.
+            <span className="w-[100px] hidden md:block h-[5px] bg-primary/30 rounded-sm"></span>
+            <p className="text-[19px] text-foreground/70 w-[80%]">
+              Como tecnólogo en desarrollo de software, me especializo en la 
+              intersección entre el desarrollo y la ciberseguridad. Mi experiencia 
+              como Auditor ISO 27001 me permite crear soluciones robustas que 
+              priorizan la seguridad desde el diseño. Combino mis habilidades 
+              técnicas con un enfoque práctico en la protección de datos y la 
+              seguridad de aplicaciones.
             </p>
           </div>
-          <button className="px-[2rem] hover:bg-yellow-400 transition-all duration-200 py-[1rem] text-[18px] font-bold uppercase bg-[#55e6a5] text-black flex items-center space-x-2 ">
-            <p>Download Cv</p>
-            <ArrowDownTrayIcon className="w-[1.6rem] h-[1.7rem] text-black" />
+          <button className="px-[2rem] hover:bg-complementary transition-all duration-300 py-[1rem] text-[18px] font-bold uppercase bg-primary text-white flex items-center space-x-2 rounded-md">
+            <p>Descargar CV</p>
+            <ArrowDownTrayIcon className="w-[1.6rem] h-[1.7rem] text-white" />
           </button>
         </div>
         <div 
-        data-aos="fade-left"
-        className="lg:w-[400px] mx-auto md:mx-0 mt-[2rem] lg:mt-0 lg:h-[500px] w-[300px] h-[300px] relative">
+          data-aos="fade-left"
+          className="lg:w-[400px] mx-auto md:mx-0 mt-[2rem] lg:mt-0 lg:h-[500px] w-[300px] h-[300px] relative"
+        >
           <Image
             src="/imagenes/foto2.jpg"
-            alt="user"
+            alt="Jhan Arevalo - Desarrollador de Software y Ciberseguridad"
             layout="fill"
             objectFit="contain"
-            className="relative z-[11] w-[100%] h-[100%] object-contain"
+            className="relative z-[11] w-[100%] h-[100%] object-contain rounded-lg"
           />
-          <div className="absolute w-[85%] h-[100%] z-[10] bg-[#55e6a5] top-[-1.5rem] right-[-1.5rem]"></div>
+          <div className="absolute w-[85%] h-[100%] z-[10] bg-primary top-[-1.5rem] right-[-1.5rem] rounded-lg"></div>
+        </div>
+
+        {/* Sección de Especialidades */}
+        <div className="col-span-1 md:col-span-2 mt-8">
+          <h3 className="text-[20px] font-bold text-primary mb-6">
+            ESPECIALIDADES
+          </h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="bg-background-secondary p-6 rounded-lg transition-all duration-300">
+              <h4 className="text-foreground font-bold mb-2">Desarrollo Seguro</h4>
+              <p className="text-foreground/70">
+                Desarrollo de aplicaciones con enfoque en seguridad desde el diseño,
+                siguiendo las mejores prácticas y estándares de la industria.
+              </p>
+            </div>
+            <div className="bg-background-secondary p-6 rounded-lg transition-all duration-300">
+              <h4 className="text-foreground font-bold mb-2">Auditoría ISO 27001</h4>
+              <p className="text-foreground/70">
+                Certificado como Auditor Interno ISO/IEC27001:2022, con experiencia
+                en evaluación y mejora de sistemas de gestión de seguridad.
+              </p>
+            </div>
+            <div className="bg-background-secondary p-6 rounded-lg transition-all duration-300">
+              <h4 className="text-foreground font-bold mb-2">Ciberseguridad</h4>
+              <p className="text-foreground/70">
+                Especializado en pruebas de penetración, análisis de vulnerabilidades
+                y prácticas de hacking ético para fortalecer la seguridad.
+              </p>
+            </div>
+          </div>
         </div>
       </div>
     </div>

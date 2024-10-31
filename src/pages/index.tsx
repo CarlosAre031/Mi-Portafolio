@@ -6,7 +6,7 @@ import About from '@/components/About';
 import Services from '@/components/Services';
 import Skills from '@/components/Skils';
 import Projects from '@/components/Projects';
-import Testimonial from '@/components/Testimonial';
+{/*import Testimonial from '@/components/Testimonial';*/}
 import Blog from '@/components/Blog';
 import Footer from '@/components/Footer';
 import AOS from 'aos';
@@ -59,8 +59,8 @@ const HomePage = () => {
         <Services />
         <Skills />
         <Projects />
-        <Testimonial />
         <Blog />
+        {/*<Testimonial />*/}
         <Footer />
       </div>
     </div>
