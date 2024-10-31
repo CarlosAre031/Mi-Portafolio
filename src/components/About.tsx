@@ -13,18 +13,13 @@ const About = () => {
       
         <div>
         
-          <h3 className="text-[25px] md:text-[35px] lg:text-[45px] md:leading-[3rem] leading-[2rem] capitalize mb-[3rem] font-bold text-foreground">
-            Desarrollo y <span className="text-complementary">Seguridad</span>
-          </h3>
+          <h4 className="text-[25px] md:text-[35px] lg:text-[45px] md:leading-[3rem] leading-[2rem] capitalize mb-[3rem] font-bold text-foreground">
+            Desarrollo y Seguridad
+          </h4>
           <div className="mb-[3rem] flex items-center md:space-x-10">
             <span className="w-[100px] hidden md:block h-[5px] bg-primary/30 rounded-sm"></span>
             <p className="text-[19px] text-foreground/70 w-[80%]">
-              Como tecnólogo en desarrollo de software, me especializo en la 
-              intersección entre el desarrollo y la ciberseguridad. Mi experiencia 
-              como Auditor ISO 27001 me permite crear soluciones robustas que 
-              priorizan la seguridad desde el diseño. Combino mis habilidades 
-              técnicas con un enfoque práctico en la protección de datos y la 
-              seguridad de aplicaciones.
+            Como tecnólogo en desarrollo de software, me especializo en la intersección crítica entre el desarrollo de aplicaciones y la ciberseguridad. Con una sólida experiencia como Auditor Certificado en ISO 27001, estoy capacitado para diseñar soluciones de software que integran principios de seguridad desde las etapas iniciales del desarrollo, asegurando una arquitectura que cumple con los más altos estándares de protección de la información.
             </p>
           </div>
           <button className="px-[2rem] hover:bg-complementary transition-all duration-300 py-[1rem] text-[18px] font-bold uppercase bg-primary text-white flex items-center space-x-2 rounded-md">

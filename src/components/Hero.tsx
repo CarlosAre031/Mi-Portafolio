@@ -35,10 +35,7 @@ const Hero = () => {
           <TextEffect />
 
           <p className="mt-[1.5rem] text-[17px] [transition:none] text-foreground/70">
-            Desarrollador de Software especializado en Ciberseguridad y Auditor ISO 27001. 
-            En Disruptive Information Technologies, me dedico a crear soluciones seguras 
-            combinando desarrollo y seguridad informática. Cuento con múltiples certificaciones 
-            en ambas áreas.
+          Desarrollador de Software especializado en Ciberseguridad y Auditor ISO 27001. Me dedico a crear soluciones seguras combinando desarrollo y seguridad informática, con un enfoque en la implementación de sistemas robustos y resilientes. Cuento con múltiples certificaciones en ambas áreas, lo que me permite abordar proyectos desde una perspectiva integral de seguridad y eficiencia, garantizando la protección de datos y el cumplimiento de normativas internacionales.
           </p>
 
           <div className="mt-[2rem] flex flex-col sm:flex-row items-center gap-6">
