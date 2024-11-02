@@ -42,7 +42,7 @@ const skillsData = {
         date: "16/7/24",
         description: "Desarrollo avanzado de APIs REST y aplicaciones web con Spring Boot 3. Implementación de buenas prácticas y patrones de diseño.",
         institution: "Alura Latam",
-        badge: "MySQL Certified",
+        badge: "Certificado por Alura",
         certificationLink: "https://app.aluracursos.com/user/carlos101973/degree-java-web-spring-boot-15781/certificate"
       },
       {
@@ -51,7 +51,7 @@ const skillsData = {
         date: "16/7/24",
         description: "Desarrollo de APIs seguras y escalables con Spring Boot. Implementación de autenticación y documentación con Swagger.",
         institution: "Alura Latam",
-        badge: "MySQL Certified",
+        badge: "Certificado por Alura",
         certificationLink: "https://app.aluracursos.com/user/carlos101973/degree-java-web-spring-boot-15781/certificate"
       },
       {
@@ -60,7 +60,7 @@ const skillsData = {
         date: "12/6/24",
         description: "Manejo avanzado de JPA/Hibernate y Spring Data. Optimización de consultas y manejo de transacciones.",
         institution: "Alura Latam",
-        badge: "MySQL Certified",
+        badge: "Certificado por Alura",
         certificationLink: "https://app.aluracursos.com/user/carlos101973/degree-javaoo-grupo6-one-15713/certificate"
       },
       {
@@ -69,7 +69,7 @@ const skillsData = {
         date: "21/5/24",
         description: "Este curso de Programador en C# te capacitará para desarrollar, mantener y optimizar aplicaciones de software en el lenguaje C#, uno de los más utilizados en la industria. Aprenderás a implementar soluciones utilizando programación orientada a objetos y a trabajar con bases de datos para construir aplicaciones robustas y eficientes.",
         institution: "Capacitate para el empleo",
-        badge: "Cetidicado por Capacitate para el empleo",
+        badge: "Certificado por Capacitate para el empleo",
       },
       {
         title: "Java Orientado a Objetos",
@@ -77,7 +77,7 @@ const skillsData = {
         date: "12/6/24",
         description: "Manejo avanzado de JPA/Hibernate y Spring Data. Optimización de consultas y manejo de transacciones.",
         institution: "Alura Latam",
-        badge: "MySQL Certified",
+        badge: "Certificado por Alura",
         certificationLink: "https://app.aluracursos.com/user/carlos101973/degree-javaoo-grupo6-one-15713/certificate"
       }
     ],
@@ -88,7 +88,7 @@ const skillsData = {
         date: "15/10/24",
         description: "Optimización de consultas complejas y administración avanzada de bases de datos MySQL.",
         institution: "Alura Latam",
-        badge: "MySQL Certified",
+        badge: "Certificado por Alura",
         certificationLink: "https://app.aluracursos.com/certificate/d3010275-6df8-49b5-92ad-4498c254e955?lang"
       },
       {
@@ -97,7 +97,7 @@ const skillsData = {
         date: "13/8/24",
         description: "Fundamentos de SQL y gestión eficiente de datos relacionales. Diseño de bases de datos y normalización.",
         institution: "Alura Latam",
-        badge: "Certificado por Alura ",
+        badge: "Certificado por Alura",
         certificationLink: "https://app.aluracursos.com/user/carlos101973/course/introduccion-sql-mysql-manipule-consulte-datos/certificate"
       }
     ],
@@ -142,7 +142,7 @@ const skillsData = {
         date: "14/12/23",
         description: "Las principales técnicas de diagnóstico en ciberseguridad permiten evaluar y fortalecer la protección de sistemas y datos en una organización.",
         institution: "Sena",
-        badge: "certificado por el Sena",
+        badge: "Certificado por el Sena",
       }
     ],
     ai: [

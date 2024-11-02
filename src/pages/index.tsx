@@ -1,86 +1,142 @@
-import React, { useEffect, useState } from 'react'
-import Nav from'./../components/Nav';
+import React, { useEffect, useState } from 'react';
+import dynamic from 'next/dynamic';
+import AOS from 'aos';
+import 'aos/dist/aos.css';
+
+// Componentes principales
+import Nav from '@/components/Nav';
 import MobileNav from '@/components/MobileNav';
 import Hero from '@/components/Hero';
 import About from '@/components/About';
 import Services from '@/components/Services';
 import Skills from '@/components/Skils';
 import Projects from '@/components/Projects';
-{/*import Testimonial from '@/components/Testimonial';*/}
-{/*import Blog from '@/components/Blog';*/}
 import Footer from '@/components/Footer';
-import AOS from 'aos';
-import 'aos/dist/aos.css'; 
-import ThemeToggle from '@/components/ThemeToggle';
 import LoadingScreen from '@/components/LoadingScreen';
+import ThemeToggle from '@/components/ThemeToggle';
+import MiniGames from '@/components/MiniGames';
+
+
+// Cargar Particle de forma dinámica para evitar problemas de SSR
+const Particle = dynamic(() => import('@/components/Particle'), {
+  ssr: false,
+  loading: () => <div className="h-screen bg-background" />
+});
 
 const HomePage = () => {
+  // Estados
+  const [isLoading, setIsLoading] = useState(true);
+  const [nav, setNav] = useState(false);
+  const [mounted, setMounted] = useState(false);
 
-  const [nav, setnav] = useState (false);
-  const openNav = () => setnav(true);
-  const closeNav = () => setnav(false);
-// You can also use <link> for styles
+  // Función para abrir/cerrar el nav móvil
+  const openNav = () => setNav(true);
+  const closeNav = () => setNav(false);
 
-  useEffect(()=>{
-    // You can also pass an optional settings object
-    // below listed default settings
+  // Inicializar AOS (Animate On Scroll)
+  useEffect(() => {
     AOS.init({
-      // Global settings:
-      disable: false, // accepts following values: 'phone', 'tablet', 'mobile', boolean, expression or function
-      startEvent: 'DOMContentLoaded', // name of the event dispatched on the document, that AOS should initialize on
-      initClassName: 'aos-init', // class applied after initialization
-      animatedClassName: 'aos-animate', // class applied on animation
-      useClassNames: false, // if true, will add content of `data-aos` as classes on scroll
-      disableMutationObserver: false, // disables automatic mutations' detections (advanced)
-      debounceDelay: 50, // the delay on debounce used while resizing window (advanced)
-      throttleDelay: 99, // the delay on throttle used while scrolling the page (advanced)
-      
-    
-      // Settings that can be overridden on per-element basis, by `data-aos-*` attributes:
-      offset: 120, // offset (in px) from the original trigger point
-      delay: 0, // values from 0 to 3000, with step 50ms
-      duration: 1000, // values from 0 to 3000, with step 50ms
-      easing: 'ease', // default easing for AOS animations
-      once: true, // whether animation should happen only once - while scrolling down
-      mirror: false, // whether elements should animate out while scrolling past them
-      anchorPlacement: 'top-bottom', // defines which position of the element regarding to window should trigger the animation
-    
+      disable: false,
+      startEvent: 'DOMContentLoaded',
+      initClassName: 'aos-init',
+      animatedClassName: 'aos-animate',
+      useClassNames: false,
+      disableMutationObserver: false,
+      debounceDelay: 50,
+      throttleDelay: 99,
+      offset: 120,
+      delay: 0,
+      duration: 1000,
+      easing: 'ease',
+      once: true,
+      mirror: false,
+      anchorPlacement: 'top-bottom',
     });
-  },[])
+
+    // Simular tiempo de carga
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 3000);
+
+    setMounted(true);
+
+    return () => {
+      clearTimeout(timer);
+    };
+  }, []);
+
+  // No renderizar nada hasta que el componente esté montado (evita problemas de hidratación)
+  if (!mounted) return null;
 
   return (
-    <div className="overflow-x-hidden">
-        <LoadingScreen />
-        <div>
-            <ThemeToggle/>
-            <MobileNav nav={nav} closeNav={closeNav}/>
-            <Nav openNav={openNav} />
-            <div id="hero">
-                <Hero />
-            </div>
-            <div className='relative z-[30]'>
-                <div id="about">
-                    <About />
-                </div>
-                <div id="services">
-                    <Services />
-                </div>
-                <div id="skills">
-                    <Skills />
-                </div>
-               {/* <div id="blog">
-                    <Blog />
-                </div>*/}
-                <div id="projects">
-                    <Projects />
-                </div>
-                <div id="footer">
-                    <Footer />
-                </div>
-            </div>
-        </div>
+    <div className="relative min-h-screen bg-background overflow-hidden">
+      {/* Pantalla de carga */}
+      {isLoading && <LoadingScreen />}
+
+      <MiniGames />
+
+      {/* Contenido principal */}
+      <div className={`transition-opacity duration-500 ${isLoading ? 'opacity-0' : 'opacity-100'}`}>
+        {/* Theme Toggle */}
+        <ThemeToggle />
+
+        {/* Navigation */}
+        <MobileNav nav={nav} closeNav={closeNav} />
+        <Nav openNav={openNav} />
+
+        {/* Hero Section con Particles */}
+        <section id="hero" className="relative">
+          <Particle />
+          <Hero />
+        </section>
+
+        {/* Main Content */}
+        <main className="relative z-30">
+          {/* About Section */}
+          <section id="about" className="scroll-mt-20">
+            <About />
+          </section>
+
+          {/* Services Section */}
+          <section id="services" className="scroll-mt-20">
+            <Services />
+          </section>
+
+          {/* Skills Section */}
+          <section id="skills" className="scroll-mt-20">
+            <Skills />
+          </section>
+
+          {/* Projects Section */}
+          <section id="projects" className="scroll-mt-20">
+            <Projects />
+          </section>
+
+          {/* Footer Section */}
+          <section id="footer">
+            <Footer />
+          </section>
+        </main>
+      </div>
+
+      {/* Overlay para cuando el nav móvil está abierto */}
+      {nav && (
+        <div 
+          className="fixed inset-0 bg-black/50 z-40"
+          onClick={closeNav}
+        />
+      )}
     </div>
-);
+  );
 };
 
+// Configuración de exportación para páginas de Next.js
 export default HomePage;
+
+// Configuración opcional de getStaticProps si necesitas datos estáticos
+export const getStaticProps = async () => {
+  return {
+    props: {}, // Serán pasadas al componente como props
+    revalidate: 60 * 60, // Opcional: Revalidar cada hora
+  };
+};

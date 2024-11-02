@@ -1,5 +1,5 @@
-/* eslint-disable prefer-const */
-import React, { useState, useEffect } from "react";
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import React, { useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, ChevronLeft, ChevronRight, ExternalLink } from "lucide-react";
 import Image from "next/image";
@@ -182,16 +182,19 @@ const ProjectModal: React.FC<{ project: Project; onClose: () => void }> = ({ pro
   };
 
   useEffect(() => {
-    let intervalId: number;
-    intervalId = window.setInterval(() => {
-      nextImage();
-    }, 5000);
-
-    return () => {
-      if (intervalId) {
-        window.clearInterval(intervalId);
-      }
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose();
+      if (e.key === 'ArrowRight') nextImage();
+      if (e.key === 'ArrowLeft') prevImage();
     };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [onClose]);
+
+  useEffect(() => {
+    const intervalId = setInterval(nextImage, 5000);
+    return () => clearInterval(intervalId);
   }, []);
 
   return (
@@ -208,7 +211,6 @@ const ProjectModal: React.FC<{ project: Project; onClose: () => void }> = ({ pro
         className="bg-background rounded-lg w-full max-w-2xl max-h-[75vh] overflow-hidden relative flex flex-col"
         onClick={e => e.stopPropagation()}
       >
-        {/* Image Gallery Section - Responsive height */}
         <div className="relative h-[200px] sm:h-[250px] md:h-[300px]">
           <motion.div
             key={currentImageIndex}
@@ -226,7 +228,6 @@ const ProjectModal: React.FC<{ project: Project; onClose: () => void }> = ({ pro
             />
           </motion.div>
 
-          {/* Navigation Controls */}
           <button
             onClick={(e) => { e.stopPropagation(); prevImage(); }}
             className="absolute left-2 top-1/2 -translate-y-1/2 bg-black/40 p-2 
@@ -251,7 +252,6 @@ const ProjectModal: React.FC<{ project: Project; onClose: () => void }> = ({ pro
             <X className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
           </button>
 
-          {/* Image Indicators */}
           <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-1 z-10">
             {allImages.map((_, index) => (
               <button
@@ -265,7 +265,6 @@ const ProjectModal: React.FC<{ project: Project; onClose: () => void }> = ({ pro
           </div>
         </div>
 
-        {/* Content Section - Scrollable */}
         <div className="flex flex-col overflow-y-auto p-4 sm:p-6">
           <div className="flex justify-between items-start mb-4">
             <div>
@@ -309,31 +308,53 @@ const ProjectModal: React.FC<{ project: Project; onClose: () => void }> = ({ pro
 const Projects: React.FC = () => {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const maxIndex = PROJECTS.length - 3; // Show 3 items at once
-
-  const nextSlide = () => {
-    setCurrentIndex(i => (i >= maxIndex ? 0 : i + 1));
+  const itemsPerView = {
+    mobile: 1,
+    tablet: 2,
+    desktop: 3
   };
 
-  const prevSlide = () => {
-    setCurrentIndex(i => (i <= 0 ? maxIndex : i - 1));
+  const getItemsPerView = () => {
+    if (typeof window === 'undefined') return itemsPerView.mobile;
+    if (window.innerWidth >= 1024) return itemsPerView.desktop;
+    if (window.innerWidth >= 768) return itemsPerView.tablet;
+    return itemsPerView.mobile;
   };
+
+  const [visibleItems, setVisibleItems] = useState(getItemsPerView());
 
   useEffect(() => {
-    let intervalId: number;
+    const handleResize = () => {
+      setVisibleItems(getItemsPerView());
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  const maxIndex = Math.max(0, PROJECTS.length - visibleItems);
+
+  const nextSlide = useCallback(() => {
+    setCurrentIndex(i => (i >= maxIndex ? 0 : i + 1));
+  }, [maxIndex]);
+
+  const prevSlide = useCallback(() => {
+    setCurrentIndex(i => (i <= 0 ? maxIndex : i - 1));
+  }, [maxIndex]);
+
+  useEffect(() => {
+    let intervalId: NodeJS.Timeout;
     
     if (!selectedProject) {
-      intervalId = window.setInterval(() => {
-        nextSlide();
-      }, 5000);
+      intervalId = setInterval(nextSlide, 5000);
     }
 
     return () => {
       if (intervalId) {
-        window.clearInterval(intervalId);
+        clearInterval(intervalId);
       }
     };
-  }, [selectedProject]);
+  }, [selectedProject, nextSlide]);
 
   return (
     <div className="bg-background pt-[4rem] md:pt-[8rem] pb-[4rem]">
@@ -345,7 +366,7 @@ const Projects: React.FC = () => {
         <motion.div
           className="flex gap-4 sm:gap-6 lg:gap-8"
           initial={false}
-          animate={{ x: `-${currentIndex * (100/3)}%` }}
+          animate={{ x: `-${currentIndex * (100/visibleItems)}%` }}
           transition={{ type: "spring", stiffness: 300, damping: 30 }}
         >
           {PROJECTS.map(project => (
@@ -361,43 +382,56 @@ const Projects: React.FC = () => {
           ))}
         </motion.div>
 
-        {/* Navigation buttons */}
         <button
           onClick={prevSlide}
-          className={`absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 
+          className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 
             bg-primary/80 p-2 sm:p-3 rounded-full hover:bg-primary 
-            transition-colors z-10 ${currentIndex === 0 ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}
+            transition-colors z-10"
+          aria-label="Previous project"
         >
           <ChevronLeft className="w-6 h-6 sm:w-8 sm:h-8 text-white" />
         </button>
 
         <button
           onClick={nextSlide}
-          className={`absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 
+          className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 
             bg-primary/80 p-2 sm:p-3 rounded-full hover:bg-primary 
-            transition-colors z-10 ${currentIndex >= maxIndex ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}
+            transition-colors z-10"
+          aria-label="Next project"
         >
           <ChevronRight className="w-6 h-6 sm:w-8 sm:h-8 text-white" />
         </button>
 
         {/* Navigation dots */}
         <div className="flex justify-center gap-3 mt-8">
-          {[...Array(PROJECTS.length - 2)].map((_, i) => (
+          {[...Array(PROJECTS.length - visibleItems + 1)].map((_, i) => (
             <button
               key={i}
               onClick={() => setCurrentIndex(i)}
-              className={`w-3 h-3 sm:w-4 sm:h-4 rounded-full transition-all duration-300 ${
+              className={`transition-all duration-300 ${
                 currentIndex === i
-                  ? "bg-primary scale-110"
-                  : "bg-background-secondary hover:bg-primary/50"
+                  ? "w-4 h-4 bg-primary rounded-full scale-110"
+                  : "w-3 h-3 bg-background-secondary hover:bg-primary/50 rounded-full"
               }`}
               aria-label={`Go to slide ${i + 1}`}
             />
           ))}
         </div>
+
+        {/* Progress bar */}
+        <div className="w-full h-1 bg-background-secondary mt-4 rounded-full overflow-hidden">
+          <motion.div
+            className="h-full bg-primary"
+            initial={{ width: "0%" }}
+            animate={{ 
+              width: `${((currentIndex + 1) / (PROJECTS.length - visibleItems + 1)) * 100}%` 
+            }}
+            transition={{ duration: 0.3 }}
+          />
+        </div>
       </div>
 
-      {/* Modal */}
+      {/* Project Modal */}
       <AnimatePresence>
         {selectedProject && (
           <ProjectModal 
@@ -406,8 +440,135 @@ const Projects: React.FC = () => {
           />
         )}
       </AnimatePresence>
+
+      {/* Mobile Swipe Handling */}
+      <div
+        className="absolute inset-0 md:hidden"
+        onTouchStart={(e) => {
+          const touch = e.touches[0];
+          const startX = touch.clientX;
+          
+          const handleTouchMove = (e: TouchEvent) => {
+            const touch = e.touches[0];
+            const diff = startX - touch.clientX;
+            
+            if (Math.abs(diff) > 50) {
+              if (diff > 0) {
+                nextSlide();
+              } else {
+                prevSlide();
+              }
+              
+              document.removeEventListener('touchmove', handleTouchMove);
+            }
+          };
+          
+          document.addEventListener('touchmove', handleTouchMove, { once: true });
+        }}
+      />
+
+      {/* Keyboard Navigation */}
+      <div 
+        tabIndex={0}
+        className="outline-none"
+        onKeyDown={(e) => {
+          if (e.key === 'ArrowLeft') prevSlide();
+          if (e.key === 'ArrowRight') nextSlide();
+        }}
+      />
+
+      {/* Accessibility Features */}
+      <div className="sr-only">
+        <button onClick={prevSlide}>Previous project</button>
+        <button onClick={nextSlide}>Next project</button>
+        <p>
+          {`Project ${currentIndex + 1} of ${PROJECTS.length - visibleItems + 1}`}
+        </p>
+      </div>
+
+      {/* Loading States */}
+      <div className="hidden">
+        {PROJECTS.map(project => (
+          <Image
+            key={project.id}
+            src={project.mainImage}
+            alt=""
+            width={1}
+            height={1}
+            priority={true}
+          />
+        ))}
+      </div>
     </div>
   );
+};
+
+// Custom hook para manejar los breakpoints
+const useBreakpoint = () => {
+  const [breakpoint, setBreakpoint] = useState({
+    isMobile: false,
+    isTablet: false,
+    isDesktop: false
+  });
+
+  useEffect(() => {
+    const handleResize = () => {
+      const width = window.innerWidth;
+      setBreakpoint({
+        isMobile: width < 768,
+        isTablet: width >= 768 && width < 1024,
+        isDesktop: width >= 1024
+      });
+    };
+
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  return breakpoint;
+};
+
+// Custom hook para manejar el autoplay
+const useAutoplay = (callback: () => void, delay: number, shouldPlay: boolean) => {
+  useEffect(() => {
+    if (!shouldPlay) return;
+
+    const intervalId = setInterval(callback, delay);
+    return () => clearInterval(intervalId);
+  }, [callback, delay, shouldPlay]);
+};
+
+// Custom hook para manejar el swipe en móvil
+const useSwipe = (onSwipeLeft: () => void, onSwipeRight: () => void) => {
+  let touchStartX = 0;
+  
+  const handleTouchStart = (e: TouchEvent) => {
+    touchStartX = e.touches[0].clientX;
+  };
+  
+  const handleTouchEnd = (e: TouchEvent) => {
+    const touchEndX = e.changedTouches[0].clientX;
+    const diff = touchStartX - touchEndX;
+    
+    if (Math.abs(diff) > 50) {
+      if (diff > 0) {
+        onSwipeLeft();
+      } else {
+        onSwipeRight();
+      }
+    }
+  };
+  
+  useEffect(() => {
+    document.addEventListener('touchstart', handleTouchStart);
+    document.addEventListener('touchend', handleTouchEnd);
+    
+    return () => {
+      document.removeEventListener('touchstart', handleTouchStart);
+      document.removeEventListener('touchend', handleTouchEnd);
+    };
+  }, [onSwipeLeft, onSwipeRight]);
 };
 
 export default Projects;
