@@ -1,25 +1,22 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+// Particle.tsx
 import { useCallback, useEffect, useState } from "react";
 import { type Container, Engine } from "tsparticles-engine";
 import Particles from "react-tsparticles";
 import { loadSlim } from "tsparticles-slim";
 
 const Particle = () => {
-    const [particleColor, setParticleColor] = useState("#825B27"); // Color claro por defecto
+    const [particleColor, setParticleColor] = useState("#825B27");
 
     useEffect(() => {
-        // Verificar el modo oscuro inicial
         const darkModeMediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
         const updateColor = (e: MediaQueryListEvent | MediaQueryList) => {
             setParticleColor(e.matches ? "#737373" : "#825B27");
         };
 
-        // Establecer color inicial
         updateColor(darkModeMediaQuery);
-
-        // Agregar listener para cambios
         darkModeMediaQuery.addEventListener('change', updateColor);
         
-        // Limpiar
         return () => darkModeMediaQuery.removeEventListener('change', updateColor);
     }, []);
 
@@ -27,8 +24,9 @@ const Particle = () => {
         await loadSlim(engine);
     }, []);
 
+
     const particlesLoaded = useCallback(async (container: Container | undefined) => {
-        console.log("Particles loaded:", container);
+        // Callback vacío para mejor rendimiento
     }, []);
 
     return (
@@ -38,7 +36,13 @@ const Particle = () => {
                 init={particlesInit}
                 loaded={particlesLoaded}
                 options={{
-                    fpsLimit: 120,
+                    fpsLimit: 30,
+                    fullScreen: {
+                        enable: false
+                    },
+                    background: {
+                        color: "transparent"
+                    },
                     interactivity: {
                         events: {
                             onClick: {
@@ -50,43 +54,41 @@ const Particle = () => {
                                 mode: "grab",
                                 parallax: {
                                     enable: true,
-                                    force: 50,
-                                    smooth: 15
+                                    force: 30,
+                                    smooth: 10
                                 }
                             },
                             resize: true,
                         },
                         modes: {
                             push: {
-                                quantity: 6,
+                                quantity: 4,
                             },
                             grab: {
-                                distance: 200,
+                                distance: 150,
                                 links: {
-                                    opacity: 0.8
+                                    opacity: 0.6
                                 }
                             }
                         },
                     },
                     particles: {
                         color: {
-                            value: [
-                                "#066A39"
-                            ],
+                            value: ["#066A39"],
                         },
                         links: {
                             color: particleColor,
-                            distance: 150,
+                            distance: 120,
                             enable: true,
-                            opacity: 0.4,
+                            opacity: 0.3,
                             width: 1,
                             triangles: {
-                                enable: true,
+                                enable: false,
                                 opacity: 0.1
                             }
                         },
                         collisions: {
-                            enable: true,
+                            enable: false,
                         },
                         move: {
                             direction: "none",
@@ -98,7 +100,7 @@ const Particle = () => {
                             speed: 0.1,
                             straight: false,
                             attract: {
-                                enable: true,
+                                enable: false,
                                 rotateX: 400,
                                 rotateY: 800
                             }
@@ -106,18 +108,19 @@ const Particle = () => {
                         number: {
                             density: {
                                 enable: true,
-                                area: 800,
+                                area: 1000,
                             },
-                            value: 80,
+                            value: 50,
+                            max: 100,
                         },
                         opacity: {
                             value: {
                                 min: 0.3,
-                                max: 0.8
+                                max: 0.6
                             },
                             animation: {
                                 enable: true,
-                                speed: 0.3,
+                                speed: 0.2,
                                 minimumValue: 0.1
                             }
                         },
@@ -125,9 +128,9 @@ const Particle = () => {
                             type: ["triangle"],
                         },
                         size: {
-                            value: { min: 2, max: 4 },
+                            value: { min: 2, max: 3 },
                             animation: {
-                                enable: true,
+                                enable: false,
                                 speed: 2,
                                 minimumValue: 0.1
                             }
@@ -136,8 +139,8 @@ const Particle = () => {
                             particles: {
                                 enable: true,
                                 color: particleColor,
-                                frequency: 0.03,
-                                opacity: 1
+                                frequency: 0.02,
+                                opacity: 0.8
                             }
                         }
                     },
