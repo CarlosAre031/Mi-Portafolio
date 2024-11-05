@@ -1,25 +1,44 @@
 import { MoonIcon, SunIcon } from "@heroicons/react/20/solid";
 import { useEffect, useState } from "react";
 
+// Script que se ejecutará antes de que se renderice la aplicación
+const themeScript = `
+  (function() {
+    function getTheme() {
+      const savedTheme = localStorage.getItem('theme');
+      if (savedTheme) {
+        return savedTheme;
+      }
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    }
+    
+    const theme = getTheme();
+    document.documentElement.classList.toggle('dark', theme === 'dark');
+  })();
+`;
+
 const ThemeToggle = () => {
-    const [darkMode, setDarkMode] = useState(false);
+    const [darkMode, setDarkMode] = useState<boolean>(() => {
+        // Inicialización del estado basada en localStorage o preferencias del sistema
+        if (typeof window !== 'undefined') {
+            const savedTheme = localStorage.getItem('theme');
+            return savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches);
+        }
+        return false;
+    });
     const [isVisible, setIsVisible] = useState(false);
 
     useEffect(() => {
-        // Recuperar el tema guardado del localStorage
-        const savedTheme = localStorage.getItem('theme');
+        // Agregar script al head del documento
+        const scriptElement = document.createElement('script');
+        scriptElement.innerHTML = themeScript;
+        document.head.appendChild(scriptElement);
         
-        if (savedTheme === 'dark') {
-            setDarkMode(true);
-            document.documentElement.classList.add('dark');
-        } else {
-            // Si no hay tema guardado o es 'light', aseguramos modo claro
-            setDarkMode(false);
-            document.documentElement.classList.remove('dark');
-        }
-
-        // Mostrar el botón con animación después de un pequeño delay
-        setTimeout(() => setIsVisible(true), 500);
+        setIsVisible(true);
+        
+        return () => {
+            document.head.removeChild(scriptElement);
+        };
     }, []);
 
     const toggleTheme = () => {

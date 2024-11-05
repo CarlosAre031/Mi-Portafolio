@@ -7,8 +7,21 @@ import { Linkedin, Github } from "lucide-react";
 import Link from "next/link";
 
 const Hero = () => {
+  const handleDownloadCV = () => {
+    // La ruta del archivo debe ser relativa a la carpeta public
+    const cvUrl = '/docs/cv-jhan-arevalo.pdf';
+    
+    // Crear un elemento anchor temporal
+    const link = document.createElement('a');
+    link.href = cvUrl;
+    link.setAttribute('download', 'CV-Jhan-Arevalo.pdf');
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
   return (
-    <div className="relative h-[98vh]">
+    <div className="relative min-h-screen md:h-[98vh]">
       <div className="absolute inset-0 mt-[10vh]">
         <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat block dark:hidden"
@@ -27,52 +40,60 @@ const Hero = () => {
 
       <Particle />
 
-      <div className="relative z-20 w-[90%] grid-cols-1 mx-auto grid lg:grid-cols-2 gap-[3rem] h-[100%] items-center">
-        <div>
-          <h1 className="text-[35px] md:text-[45px] text-foreground font-bold">
+      <div className="relative z-20 w-[90%] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-[3rem] h-full min-h-[calc(100vh-10vh)] items-center py-20 lg:py-0">
+        <div className="text-center lg:text-left">
+          <h1 className="text-2xl sm:text-[35px] md:text-[45px] text-foreground font-bold">
             ¡HOLA, SOY <span className="text-primary hover:text-complementary transition-colors duration-300">JHAN!</span>
           </h1>
           <TextEffect />
 
-          <p className="mt-[1.5rem] text-[17px] [transition:none] text-foreground/70">
-          Desarrollador de Software especializado en Ciberseguridad y Auditor ISO 27001. Me dedico a crear soluciones seguras combinando desarrollo y seguridad informática, con un enfoque en la implementación de sistemas robustos y resilientes. Cuento con múltiples certificaciones en ambas áreas, lo que me permite abordar proyectos desde una perspectiva integral de seguridad y eficiencia, garantizando la protección de datos y el cumplimiento de normativas internacionales.
+          <p className="mt-6 text-base sm:text-[17px] text-foreground/70 max-w-2xl mx-auto lg:mx-0">
+            Desarrollador de Software especializado en Ciberseguridad y Auditor ISO 27001. Me dedico a crear soluciones seguras combinando desarrollo y seguridad informática, con un enfoque en la implementación de sistemas robustos y resilientes. Cuento con múltiples certificaciones en ambas áreas, lo que me permite abordar proyectos desde una perspectiva integral de seguridad y eficiencia, garantizando la protección de datos y el cumplimiento de normativas internacionales.
           </p>
 
-          <div className="mt-[2rem] flex flex-col sm:flex-row items-center gap-6">
+          <div className="mt-8 flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-6">
             {/* Botón de CV */}
-            <button className="px-[2rem] hover:bg-complementary transition-all duration-300 py-[1rem] text-[18px] font-bold uppercase bg-primary text-white flex items-center space-x-2 rounded-md hover:scale-105">
-              <p>Hoja de Vida</p>
-              <ArrowDownTrayIcon className="w-[1.6rem] h-[1.7rem] text-white" />
+            <button 
+              onClick={handleDownloadCV}
+              className="w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 
+                       text-base sm:text-lg font-bold uppercase 
+                       bg-primary text-white rounded-md
+                       hover:bg-complementary hover:scale-105
+                       transition-all duration-300
+                       flex items-center justify-center space-x-2"
+            >
+              <span>Hoja de Vida</span>
+              <ArrowDownTrayIcon className="w-5 h-5 sm:w-6 sm:h-6" />
             </button>
 
             {/* Contenedor de enlaces sociales */}
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-4 mt-4 sm:mt-0">
               {/* LinkedIn */}
               <Link 
                 href="https://www.linkedin.com/in/jhan-arevalo" 
                 target="_blank"
-                className="group"
+                className="group transform transition-transform hover:scale-110"
               >
-                <Linkedin className="w-[2.5rem] h-[2.5rem] text-[#0A66C2] group-hover:text-complementary transition-all duration-300 hover:scale-110" />
+                <Linkedin className="w-8 h-8 sm:w-10 sm:h-10 text-[#0A66C2] group-hover:text-complementary transition-colors duration-300" />
               </Link>
 
               {/* GitHub */}
               <Link 
                 href="https://github.com/CarlosAre031" 
                 target="_blank"
-                className="group"
+                className="group transform transition-transform hover:scale-110"
               >
-                <Github className="w-[2.5rem] h-[2.5rem] text-[#171515] dark:text-white group-hover:text-complementary transition-all duration-300 hover:scale-110" />
+                <Github className="w-8 h-8 sm:w-10 sm:h-10 text-[#171515] dark:text-white group-hover:text-complementary transition-colors duration-300" />
               </Link>
 
               {/* WhatsApp */}
               <Link 
                 href="https://wa.me/573176988239" 
                 target="_blank"
-                className="group bg-[#25D366] hover:bg-complementary rounded-full p-2 transition-all duration-300 hover:scale-110"
+                className="group bg-[#25D366] hover:bg-complementary rounded-full p-2 transform transition-all duration-300 hover:scale-110"
               >
                 <svg 
-                  className="w-[1.5rem] h-[1.5rem] text-white"
+                  className="w-5 h-5 sm:w-6 sm:h-6 text-white"
                   fill="currentColor" 
                   viewBox="0 0 24 24"
                 >
@@ -83,14 +104,16 @@ const Hero = () => {
           </div>
         </div>
 
-        <div className="w-[400px] hidden bg-primary relative lg:flex items-center rounded-full h-[425px] transition-all duration-300 hover:shadow-xl hover:shadow-primary/20">
-          <Image
-            src="/imagenes/foto1.jpg"
-            alt="Jhan Arevalo - Desarrollador de Software"
-            fill
-            className="object-cover rounded-full hover:scale-105 transition-transform duration-300"
-            priority
-          />
+        <div className="hidden lg:flex justify-center items-center">
+          <div className="relative w-[300px] sm:w-[400px] aspect-square bg-primary rounded-full transition-all duration-300 hover:shadow-xl hover:shadow-primary/20">
+            <Image
+              src="/imagenes/foto1.jpg"
+              alt="Jhan Arevalo - Desarrollador de Software"
+              fill
+              className="object-cover rounded-full hover:scale-105 transition-transform duration-300"
+              priority
+            />
+          </div>
         </div>
       </div>
     </div>

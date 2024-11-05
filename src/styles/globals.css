@@ -12,8 +12,8 @@
   --background: #f5eee4;
   --background-secondary: #f5eee4;
   --foreground: #171717;
-  --trans-dur: 0.4s;
-  --trans-timing: cubic-bezier(0.65, 0, 0.35, 1);
+  --trans-dur: 0.2s;
+  --trans-timing: ease;
 }
 
 /* Variables para el modo oscuro */
@@ -26,12 +26,20 @@
   --foreground: #ededed;
 }
 
-/* Transiciones suaves para los cambios de tema */
-* {
+/* Transiciones optimizadas - solo aplicar a elementos específicos */
+.theme-transition {
   transition: background-color var(--trans-dur) var(--trans-timing),
-              color var(--trans-dur) var(--trans-timing),
-              border-color var(--trans-dur) var(--trans-timing),
-              box-shadow var(--trans-dur) var(--trans-timing);
+              color var(--trans-dur) var(--trans-timing);
+}
+
+/* Transiciones para elementos interactivos */
+button, 
+a, 
+.nav-link, 
+.nav-link-mobile {
+  transition: color var(--trans-dur) var(--trans-timing),
+              background-color var(--trans-dur) var(--trans-timing),
+              transform 0.2s ease;
 }
 
 @layer components {
@@ -136,9 +144,9 @@ body {
   background-color: color-mix(in srgb, var(--foreground) 60%, transparent);
 }
 
-/* Estilos para scrollbar */
+/* Estilos para scrollbar optimizados */
 ::-webkit-scrollbar {
-  width: 10px;
+  width: 8px;
 }
 
 ::-webkit-scrollbar-track {
@@ -147,11 +155,12 @@ body {
 
 ::-webkit-scrollbar-thumb {
   background: var(--primary);
-  border-radius: 5px;
+  border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
   background: var(--complementary);
+  transition: background-color 0.2s ease;
 }
 
 /* Estilos para selección de texto */
@@ -160,7 +169,7 @@ body {
   color: var(--background);
 }
 
-/* Animaciones */
+/* Animaciones optimizadas */
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -171,7 +180,7 @@ body {
 }
 
 .animate-fade-in {
-  animation: fadeIn var(--trans-dur) var(--trans-timing);
+  animation: fadeIn 0.2s ease forwards;
 }
 
 /* Utilidades de modo oscuro específicas */
@@ -183,12 +192,56 @@ body {
   filter: brightness(0.9);
 }
 
+/* Optimizaciones de rendimiento */
+.gpu-acceleration {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
 /* Media queries para preferencias de movimiento reducido */
 @media (prefers-reduced-motion: reduce) {
-  * {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
+  *, 
+  .theme-transition, 
+  button, 
+  a, 
+  .nav-link, 
+  .nav-link-mobile {
+    transition: none !important;
+    animation: none !important;
     scroll-behavior: auto !important;
   }
+}
+
+/* Optimizaciones para dispositivos móviles */
+@media (max-width: 768px) {
+  :root {
+    --trans-dur: 0.15s; /* Transiciones más rápidas en móvil */
+  }
+  
+  .theme-transition {
+    transition: background-color var(--trans-dur) var(--trans-timing),
+                color var(--trans-dur) var(--trans-timing);
+  }
+}
+
+/* Precargar variables de color para evitar parpadeos */
+:root {
+  color-scheme: light dark;
+}
+
+/* Clase para elementos que no necesitan transición */
+.no-transition {
+  transition: none !important;
+}
+
+/* Optimización para imágenes en cambio de tema */
+.theme-aware-image {
+  transition: filter var(--trans-dur) var(--trans-timing);
+}
+
+/* Mejoras de rendimiento para elementos fijos */
+.fixed-element {
+  transform: translateZ(0);
+  will-change: transform;
 }

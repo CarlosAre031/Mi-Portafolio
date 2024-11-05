@@ -15,6 +15,7 @@ import Footer from '@/components/Footer';
 import LoadingScreen from '@/components/LoadingScreen';
 import ThemeToggle from '@/components/ThemeToggle';
 import MiniGames from '@/components/MiniGames';
+import Certifications from '@/components/Blog';
 
 
 // Cargar Particle de forma dinámica para evitar problemas de SSR
@@ -102,9 +103,15 @@ const HomePage = () => {
             <Services />
           </section>
 
+
           {/* Skills Section */}
           <section id="skills" className="scroll-mt-20">
             <Skills />
+          </section>
+          
+          {/* Skills Section */}
+          <section id="blog" className="scroll-mt-20">
+            <Certifications />
           </section>
 
           {/* Projects Section */}
